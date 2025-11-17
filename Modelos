@@ -1,0 +1,98 @@
+User.js
+
+const db = require('./database');
+
+class User {
+  static create(name, email, callback) {
+    db.run('INSERT INTO users (name, email) VALUES (?, ?)', [name, email], function(err) {
+      callback(err, this.lastID);
+    });
+  }
+
+  static findAll(callback) {
+    db.all('SELECT * FROM users', callback);
+  }
+
+  static findById(id, callback) {
+    db.get('SELECT * FROM users WHERE id = ?', [id], callback);
+  }
+
+  static update(id, name, email, callback) {
+    db.run('UPDATE users SET name = ?, email = ? WHERE id = ?', [name, email, id], callback);
+  }
+
+  static delete(id, callback) {
+    db.run('DELETE FROM users WHERE id = ?', [id], callback);
+  }
+}
+
+module.exports = User;
+
+Task.js
+
+const db = require('./database');
+
+class Task {
+  static create(title, description, status, userId, categoryId, callback) {
+    db.run('INSERT INTO tasks (title, description, status, user_id, category_id) VALUES (?, ?, ?, ?, ?)', 
+           [title, description, status, userId, categoryId], function(err) {
+      callback(err, this.lastID);
+    });
+  }
+
+  static findAll(callback) {
+    db.all('SELECT * FROM tasks', callback);
+  }
+
+  static findById(id, callback) {
+    db.get('SELECT * FROM tasks WHERE id = ?', [id], callback);
+  }
+
+  static update(id, title, description, status, categoryId, callback) {
+    db.run('UPDATE tasks SET title = ?, description = ?, status = ?, category_id = ? WHERE id = ?', 
+           [title, description, status, categoryId, id], callback);
+  }
+
+  static delete(id, callback) {
+    db.run('DELETE FROM tasks WHERE id = ?', [id], callback);
+  }
+
+  static findByUser(userId, callback) {
+    db.all('SELECT * FROM tasks WHERE user_id = ?', [userId], callback);
+  }
+}
+
+module.exports = Task;
+
+Category.js
+
+const db = require('./database');
+
+class Category {
+  static create(name, callback) {
+    db.run('INSERT INTO categories (name) VALUES (?)', [name], function(err) {
+      callback(err, this.lastID);
+    });
+  }
+
+  static findAll(callback) {
+    db.all('SELECT * FROM categories', callback);
+  }
+
+  static findById(id, callback) {
+    db.get('SELECT * FROM categories WHERE id = ?', [id], callback);
+  }
+
+  static update(id, name, callback) {
+    db.run('UPDATE categories SET name = ? WHERE id = ?', [name, id], callback);
+  }
+
+  static delete(id, callback) {
+    db.run('DELETE FROM categories WHERE id = ?', [id], callback);
+  }
+}
+
+module.exports = Category;
+
+
+

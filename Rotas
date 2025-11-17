@@ -1,0 +1,42 @@
+users.js
+
+const express = require('express');
+const router = express.Router();
+const userController = require('../controllers/userController');
+
+router.post('/', userController.createUser);
+router.get('/', userController.getUsers);
+router.get('/:id', userController.getUserById);
+router.put('/:id', userController.updateUser);
+router.delete('/:id', userController.deleteUser);
+
+module.exports = router;
+
+tasks.js
+
+const express = require('express');
+const router = express.Router();
+const taskController = require('../controllers/taskController');
+
+router.post('/', taskController.createTask);
+router.get('/', taskController.getTasks);
+router.get('/:id', taskController.getTaskById);
+router.put('/:id', taskController.updateTask);
+router.delete('/:id', taskController.deleteTask);
+router.get('/user/:userId', taskController.getTasksByUser);  // Rota adicional para tarefas de um usuário
+
+module.exports = router;
+
+categories.js
+
+const express = require('express');
+const router = express.Router();
+const categoryController = require('../controllers/categoryController');
+
+router.post('/', categoryController.createCategory);
+router.get('/', categoryController.getCategories);
+router.get('/:id', categoryController.getCategoryById);
+router.put('/:id', categoryController.updateCategory);
+router.delete('/:id', categoryController.deleteCategory);
+
+module.exports = router;

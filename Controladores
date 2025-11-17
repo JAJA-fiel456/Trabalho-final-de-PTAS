@@ -1,0 +1,142 @@
+userController.js
+
+const User = require('../models/User');
+
+exports.createUser = (req, res) => {
+  const { name, email } = req.body;
+  User.create(name, email, (err, id) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.status(201).json({ id, message: 'Usuário criado' });
+  });
+};
+
+exports.getUsers = (req, res) => {
+  User.findAll((err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+};
+
+exports.getUserById = (req, res) => {
+  const { id } = req.params;
+  User.findById(id, (err, row) => {
+    if (err) return res.status(500).json({ error: err.message });
+    if (!row) return res.status(404).json({ message: 'Usuário não encontrado' });
+    res.json(row);
+  });
+};
+
+exports.updateUser = (req, res) => {
+  const { id } = req.params;
+  const { name, email } = req.body;
+  User.update(id, name, email, (err) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json({ message: 'Usuário atualizado' });
+  });
+};
+
+exports.deleteUser = (req, res) => {
+  const { id } = req.params;
+  User.delete(id, (err) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json({ message: 'Usuário deletado' });
+  });
+};
+
+taskController.js
+
+const Task = require('../models/Task');
+
+exports.createTask = (req, res) => {
+  const { title, description, status, userId, categoryId } = req.body;
+  Task.create(title, description, status, userId, categoryId, (err, id) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.status(201).json({ id, message: 'Tarefa criada' });
+  });
+};
+
+exports.getTasks = (req, res) => {
+  Task.findAll((err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+};
+
+exports.getTaskById = (req, res) => {
+  const { id } = req.params;
+  Task.findById(id, (err, row) => {
+    if (err) return res.status(500).json({ error: err.message });
+    if (!row) return res.status(404).json({ message: 'Tarefa não encontrada' });
+    res.json(row);
+  });
+};
+
+exports.updateTask = (req, res) => {
+  const { id } = req.params;
+  const { title, description, status, categoryId } = req.body;
+  Task.update(id, title, description, status, categoryId, (err) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json({ message: 'Tarefa atualizada' });
+  });
+};
+
+exports.deleteTask = (req, res) => {
+  const { id } = req.params;
+  Task.delete(id, (err) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json({ message: 'Tarefa deletada' });
+  });
+};
+
+exports.getTasksByUser = (req, res) => {
+  const { userId } = req.params;
+  Task.findByUser(userId, (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+};
+
+categoryController.js
+
+const Category = require('../models/Category');
+
+exports.createCategory = (req, res) => {
+  const { name } = req.body;
+  Category.create(name, (err, id) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.status(201).json({ id, message: 'Categoria criada' });
+  });
+};
+
+exports.getCategories = (req, res) => {
+  Category.findAll((err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+};
+
+exports.getCategoryById = (req, res) => {
+  const { id } = req.params;
+  Category.findById(id, (err, row) => {
+    if (err) return res.status(500).json({ error: err.message });
+    if (!row) return res.status(404).json({ message: 'Categoria não encontrada' });
+    res.json(row);
+  });
+};
+
+exports.updateCategory = (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+  Category.update(id, name, (err) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json({ message: 'Categoria atualizada' });
+  });
+};
+
+exports.deleteCategory = (req, res) => {
+  const { id } = req.params;
+  Category.delete(id, (err) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json({ message: 'Categoria deletada' });
+  });
+};
